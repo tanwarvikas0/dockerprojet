@@ -1,11 +1,10 @@
-FROM ubuntu
+FROM ubuntu:14.04
 MAINTAINER tanwarv224@gmail.com
-RUN  apt-get install -y apache2 \
-    zip \
-    unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page296/finexo.zip  /var/www/html
+RUN  apt-get update && apt-get install -y apache2  zip unzip 
+COPY carvilla.zip /var/www/html
 WORKDIR /var/www/html
-RUN   unzip finexo.zip
-RUN  cp -rvf finexo-html/* .
-CMD ["/usr/sbin/httpd", "D", "FOREGROUD"]
-EXPOSE 80
+RUN unzip carvilla.zip && \
+    cp -rvf carvilla-v1.0/* . && \
+    rm -rf carvilla.zip carvilla-v1.0
+CMD ["/usr/sbin/apache2ctl","-D", "FOREGROUND"]
+EXPOSE 80  
